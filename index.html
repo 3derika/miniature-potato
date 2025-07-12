@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where Do I Belong? - 30-Day Mother's Journey Journal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #fef7f7 0%, #f0f4ff 100%);
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .cover-page {
+            background: linear-gradient(135deg, #ffeef7 0%, #e8f4fd 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-image-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 777px;
+            background: linear-gradient(135deg, #ffb6c1 0%, #add8e6 50%, #ffdab9 100%);
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed #d4af37;
+            font-style: italic;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-image-placeholder:hover {
+            background: linear-gradient(135deg, #ffb6c1 20%, #add8e6 50%, #ffdab9 80%);
+            border-color: #ffd700;
+        }
+        
+        .uploaded-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        
+        .upload-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(173, 216, 230, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 218, 185, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .cover-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            color: #c2185b;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+        }
+        
+        .cover-subtitle {
+            font-size: 1.2em;
+            color: #4a90e2;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cover-dedication {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #ffb6c1 0%, #add8e6 100%);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: #2c3e50;
+        }
+        
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .day-btn {
+            background: linear-gradient(135deg, #ffdab9 0%, #ffb6c1 100%);
+            border: 2px solid #d4af37;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .day-btn:hover, .day-btn.active {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            transform: scale(1.1);
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .section.active {
+            display: block;
+            border-color: #d4af37;
+        }
+        
+        .daily-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .tracking-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #add8e6;
+            box-shadow: 0 3px 10px rgba(173, 216, 230, 0.3);
+        }
+        
+        .inspiration-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffeef7 100%);
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 3px 10px rgba(255, 182, 193, 0.3);
+        }
+        
+        .quote-text {
+            font-size: 1.1em;
+            font-style: italic;
+            color: #c2185b;
+            text-align: center;
+            margin: 15px 0;
+            text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.2);
+        }
+        
+        .mandala-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #f0f8ff 0%, #fff5f5 100%);
+            border: 2px solid #d4af37;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .weekly-mandala-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .weekly-mandala-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid #add8e6;
+            box-shadow: 0 3px 15px rgba(173, 216, 230, 0.3);
+        }
+        
+        .week-mandala-link {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2c3e50;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+        
+        .week-mandala-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .mandala-placeholder {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #ffdab9 0%, #add8e6 50%, #ffb6c1 100%);
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px dashed #d4af37;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-size: 12px;
+            padding: 10px;
+        }
+        
+        .mandala-placeholder:hover {
+            background: linear-gradient(135deg, #ffdab9 20%, #add8e6 50%, #ffb6c1 80%);
+            border-color: #ffd700;
+        }
+        
+        .mood-wheel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .mood-option {
+            background: linear-gradient(135deg, #ffdab9 0%, #ffb6c1 100%);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 12px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mood-option:hover, .mood-option.selected {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            transform: scale(1.05);
+        }
+        
+        .energy-slider {
+            width: 100%;
+            margin: 15px 0;
+            accent-color: #d4af37;
+        }
+        
+        .location-toggle {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+        
+        .location-btn {
+            background: linear-gradient(135deg, #add8e6 0%, #ffb6c1 100%);
+            border: 2px solid #d4af37;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+        
+        .location-btn:hover, .location-btn.active {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            transform: scale(1.05);
+        }
+        
+        .behavior-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .behavior-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffeef7 100%);
+            border-radius: 8px;
+            border: 1px solid #add8e6;
+        }
+        
+        .engagement-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffdab9 0%, #f0f8ff 100%);
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+        }
+        
+        .scale-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #add8e6 0%, #ffb6c1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2c3e50;
+            border: 2px solid #d4af37;
+            transition: all 0.3s ease;
+        }
+        
+        .scale-number:hover, .scale-number.selected {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            transform: scale(1.2);
+        }
+        
+        .textarea-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #add8e6;
+            border-radius: 10px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+            resize: vertical;
+            margin-top: 10px;
+        }
+        
+        .textarea-input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            color: #2c3e50;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            margin: 30px auto;
+            display: block;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+        
+        .weekly-feedback {
+            background: linear-gradient(135deg, #e8f4fd 0%, #fff5f5 100%);
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .feedback-title {
+            color: #c2185b;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(212, 175, 55, 0.3);
+        }
+        
+        .feedback-message {
+            color: #4a90e2;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .intro-letter-placeholder {
+            width: 100%;
+            max-width: 600px;
+            height: 777px;
+            background: linear-gradient(135deg, #ffeef7 0%, #e8f4fd 100%);
+            border: 3px dashed #d4af37;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+        
+        .intro-letter-placeholder:hover {
+            background: linear-gradient(135deg, #ffeef7 20%, #e8f4fd 80%);
+            border-color: #ffd700;
+        }
+        
+        .upload-instructions {
+            background: linear-gradient(135deg, #e8f4fd 0%, #fff5f5 100%);
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #4a90e2;
+        }
+        
+        .upload-tip {
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .auto-save-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+            color: #2c3e50;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .auto-save-indicator.show {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .daily-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .cover-title {
+                font-size: 2em;
+            }
+            
+            .navigation {
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Auto-save indicator -->
+        <div id="autoSaveIndicator" class="auto-save-indicator">
+            ✓ Auto-saved
+        </div>
+        
+        <!-- Cover Page -->
+        <div class="cover-page">
+            <div class="header-image-container">
+                <!-- Replace 'YOUR_HEADER_IMAGE_BASE64_HERE' with actual base64 -->
+                <img src="data:image/png;base64,YOUR_HEADER_IMAGE_BASE64_HERE" 
+                     alt="Header Image" 
+                     style="width: 100%; max-width: 600px; height: 777px; object-fit: contain; border-radius: 15px; border: 3px solid #d4af37;"
+                     onerror="this.style.display='none'; document.getElementById('headerPlaceholder').style.display='flex'">
+                
+                <!-- Fallback placeholder if image fails -->
+                <div id="headerPlaceholder" class="header-image-placeholder" style="display: none;" onclick="safeClick('headerImageInput')">
+                    <input type="file" id="headerImageInput" class="upload-input" accept="image/*" onchange="uploadHeaderImage(this)">
+                    <span>Click to Upload Header Image<br>(8.5 x 11 Portrait - floral_cover.jpg.png)</span>
+                </div>
+            </div>
+            <h1 class="cover-title">Where Do I Belong?</h1>
+            <p class="cover-subtitle">A 30-Day Journey Towards Clarity</p>
+            <p class="cover-dedication">A gift for my Sister</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('intro')">Welcome Letter</button>
+            <button class="nav-btn" onclick="showSection('daily')">Daily Journal</button>
+            <button class="nav-btn" onclick="showSection('devotional')">Devotional</button>
+            <button class="nav-btn" onclick="showSection('coloring')">Weekly Mandalas</button>
+            <button class="nav-btn" onclick="showSection('summary')">Journey Summary</button>
+        </div>
+        
+        <!-- Day Selector -->
+        <div class="day-selector" id="daySelector">
+            <!-- Days 1-30 will be generated by JavaScript -->
+        </div>
+        
+        <!-- Welcome Letter Section -->
+        <div id="intro" class="section active">
+            <h2>Welcome to Your Journey</h2>
+            <div class="tracking-card" style="background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);">
+                <h3>Your Personal Welcome Letter</h3>
+                
+                <!-- Embedded Welcome Letter Image -->
+                <div class="intro-letter-container">
+                    <img src="data:image/png;base64,YOUR_WELCOME_LETTER_BASE64_HERE" 
+                         alt="Welcome Letter" 
+                         style="width: 100%; max-width: 600px; height: 777px; object-fit: contain; border-radius: 15px; border: 3px solid #d4af37; margin: 20px auto; display: block;"
+                         onerror="this.style.display='none'; document.getElementById('introPlaceholder').style.display='flex'">
+                    
+                    <!-- Fallback placeholder if image fails -->
+                    <div id="introPlaceholder" class="intro-letter-placeholder" style="display: none;" onclick="safeClick('introLetterInput')">
+                        <input type="file" id="introLetterInput" class="upload-input" accept="image/*,.pdf,.doc,.docx,.txt" onchange="uploadIntroLetter(this)">
+                        <span style="font-style: italic; color: #666; text-align: center;">Click to Upload Your Welcome Letter<br>(8.5 x 11 Portrait - welcome.png)</span>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+                    <div>
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">Dear Self,</label>
+                        <textarea class="textarea-input" style="min-height: 150px;" 
+                                  placeholder="A note to yourself as you begin this journey..."
+                                  oninput="saveData('dear_self_note', this.value)"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">What I hope to discover on this journey:</label>
+                        <textarea class="textarea-input" style="min-height: 150px;" 
+                                  placeholder="My intentions and hopes for the next 30 days..."
+                                  oninput="saveData('journey_hopes', this.value)"></textarea>
+                    </div>
+                </div>
+                          
+                <label style="display: block; margin: 30px 0 10px; font-weight: 600;">My prayer/intention for this journey:</label>
+                <textarea class="textarea-input" style="min-height: 100px;" 
+                          placeholder="A prayer, intention, or commitment as I begin..."
+                          oninput="saveData('journey_prayer', this.value)"></textarea>
+            </div>
+        </div>
+        
+        <!-- Daily Journal Section -->
+        <div id="daily" class="section">
+            <h2>Daily Reflection - Day <span id="currentDayNum">1</span></h2>
+            <div id="dailyContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+        
+        <!-- Devotional Section -->
+        <div id="devotional" class="section">
+            <h2>7-Day Devotional Journey</h2>
+            <div class="tracking-card">
+                <h3>Day 1: Finding Your Foundation</h3>
+                <p class="quote-text">"God is within her, she will not fall." - Psalm 46:5</p>
+                <p>In the chaos of motherhood and decision-making, remember that your foundation is not built on circumstances, but on the unchanging love of God. Today, reflect on what "home" means beyond physical location.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">How do you feel God's presence in your current situation?</label>
+                <textarea class="textarea-input" placeholder="Pour out your heart..."></textarea>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">What does spiritual "home" look like for you?</label>
+                <textarea class="textarea-input" placeholder="Describe your spiritual foundation..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 2: Identity Beyond Roles</h3>
+                <p class="quote-text">"She is clothed with strength and dignity, and she laughs without fear of the future." - Proverbs 31:25</p>
+                <p>You are more than a mother, more than a wife, more than your circumstances. Today we explore the woman God created you to be, independent of your roles.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">Who are you when you strip away all titles and expectations?</label>
+                <textarea class="textarea-input" placeholder="Discover your core identity..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 3: Peace in Uncertainty</h3>
+                <p class="quote-text">"The Lord will fight for you; you need only to be still." - Exodus 14:14</p>
+                <p>Decisions don't have to be made from a place of fear or rushing. God invites you into stillness where clarity emerges naturally.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">What fears are driving your decision-making process?</label>
+                <textarea class="textarea-input" placeholder="Name your fears..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 4: Wisdom in Community</h3>
+                <p class="quote-text">"Two are better than one... if either of them falls down, one can help the other up." - Ecclesiastes 4:9-10</p>
+                <p>God often speaks through the loving voices around us. Consider the counsel of those who know and love you well.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">What wisdom have trusted people shared with you?</label>
+                <textarea class="textarea-input" placeholder="Reflect on godly counsel..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 5: Grace for Imperfect Choices</h3>
+                <p class="quote-text">"He makes all things beautiful in His time." - Ecclesiastes 3:11</p>
+                <p>There is no perfect choice, only faithful steps. God's grace covers our decisions and can redeem any path we choose.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">How can you extend grace to yourself in this process?</label>
+                <textarea class="textarea-input" placeholder="Practice self-compassion..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 6: Children as Gifts, Not Burdens</h3>
+                <p class="quote-text">"Children are a heritage from the Lord, offspring a reward from him." - Psalm 127:3</p>
+                <p>Your love for your children and your need for personal fulfillment are not opposing forces. Both can coexist beautifully.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">How do you honor both your children's needs and your own growth?</label>
+                <textarea class="textarea-input" placeholder="Find the balance..."></textarea>
+            </div>
+            
+            <div class="tracking-card">
+                <h3>Day 7: Trust in Divine Timing</h3>
+                <p class="quote-text">"For everything there is a season, and a time for every matter under heaven." - Ecclesiastes 3:1</p>
+                <p>This season of decision-making has purpose. Trust that clarity will come in God's perfect timing, not necessarily yours.</p>
+                <label style="display: block; margin: 15px 0; font-weight: 600;">How can you surrender the timeline to God while still taking wise action?</label>
+                <textarea class="textarea-input" placeholder="Release control with faith..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Weekly Mandalas Section -->
+        <div id="coloring" class="section">
+            <h2>Weekly Reflection Mandalas</h2>
+            
+            <div class="upload-instructions">
+                <strong>🎨 Weekly Mindful Coloring:</strong><br>
+                At the end of each week, take time for mindful coloring as you reflect on your journey.
+                <div class="upload-tip">Upload coloring mandalas for each week and access them from the daily journal on days 7, 14, 21, and 30</div>
+            </div>
+            
+            <div class="weekly-mandala-container">
+                <div class="weekly-mandala-card">
+                    <h3 style="color: #c2185b; margin-bottom: 15px;">Week 1 Mandala</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Complete after Day 7</p>
+                    
+                    <!-- Embedded Mandala Option -->
+                    <img src="data:image/png;base64,YOUR_MANDALA1_BASE64_HERE" 
+                         alt="Week 1 Mandala" 
+                         style="width: 180px; height: 180px; border-radius: 50%; margin: 20px auto; display: block; border: 3px solid #d4af37; object-fit: cover;"
+                         onerror="this.style.display='none'; document.getElementById('mandala1Placeholder').style.display='flex'">
+                    
+                    <!-- Fallback placeholder -->
+                    <div id="mandala1Placeholder" class="mandala-placeholder" style="display: none;" onclick="safeClick('mandala1Input')">
+                        <input type="file" id="mandala1Input" class="upload-input" accept="image/*" onchange="uploadMandalaImage(this, 1)">
+                        <span>Click to Upload<br>Week 1 Mandala</span>
+                    </div>
+                    
+                    <label style="display: block; margin: 15px 0 10px; font-weight: 600; font-size: 12px;">Week 1 Reflections:</label>
+                    <textarea class="textarea-input" style="min-height: 80px; font-size: 12px;" 
+                              placeholder="What did I learn this week about where I belong?"
+                              oninput="saveData('week1_mandala_reflection', this.value)"></textarea>
+                </div>
+                
+                <div class="weekly-mandala-card">
+                    <h3 style="color: #c2185b; margin-bottom: 15px;">Week 2 Mandala</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Complete after Day 14</p>
+                    
+                    <img src="data:image/png;base64,YOUR_MANDALA2_BASE64_HERE" 
+                         alt="Week 2 Mandala" 
+                         style="width: 180px; height: 180px; border-radius: 50%; margin: 20px auto; display: block; border: 3px solid #d4af37; object-fit: cover;"
+                         onerror="this.style.display='none'; document.getElementById('mandala2Placeholder').style.display='flex'">
+                    
+                    <div id="mandala2Placeholder" class="mandala-placeholder" style="display: none;" onclick="safeClick('mandala2Input')">
+                        <input type="file" id="mandala2Input" class="upload-input" accept="image/*" onchange="uploadMandalaImage(this, 2)">
+                        <span>Click to Upload<br>Week 2 Mandala</span>
+                    </div>
+                    
+                    <label style="display: block; margin: 15px 0 10px; font-weight: 600; font-size: 12px;">Week 2 Reflections:</label>
+                    <textarea class="textarea-input" style="min-height: 80px; font-size: 12px;" 
+                              placeholder="How have my feelings about home evolved?"
+                              oninput="saveData('week2_mandala_reflection', this.value)"></textarea>
+                </div>
+                
+                <div class="weekly-mandala-card">
+                    <h3 style="color: #c2185b; margin-bottom: 15px;">Week 3 Mandala</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Complete after Day 21</p>
+                    
+                    <img src="data:image/png;base64,YOUR_MANDALA3_BASE64_HERE" 
+                         alt="Week 3 Mandala" 
+                         style="width: 180px; height: 180px; border-radius: 50%; margin: 20px auto; display: block; border: 3px solid #d4af37; object-fit: cover;"
+                         onerror="this.style.display='none'; document.getElementById('mandala3Placeholder').style.display='flex'">
+                    
+                    <div id="mandala3Placeholder" class="mandala-placeholder" style="display: none;" onclick="safeClick('mandala3Input')">
+                        <input type="file" id="mandala3Input" class="upload-input" accept="image/*" onchange="uploadMandalaImage(this, 3)">
+                        <span>Click to Upload<br>Week 3 Mandala</span>
+                    </div>
+                    
+                    <label style="display: block; margin: 15px 0 10px; font-weight: 600; font-size: 12px;">Week 3 Reflections:</label>
+                    <textarea class="textarea-input" style="min-height: 80px; font-size: 12px;" 
+                              placeholder="What patterns am I noticing in my journey?"
+                              oninput="saveData('week3_mandala_reflection', this.value)"></textarea>
+                </div>
+                
+                <div class="weekly-mandala-card">
+                    <h3 style="color: #c2185b; margin-bottom: 15px;">Week 4 Mandala</h3>
+                    <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Complete after Day 28/30</p>
+                    
+                    <img src="data:image/png;base64,YOUR_MANDALA4_BASE64_HERE" 
+                         alt="Week 4 Mandala" 
+                         style="width: 180px; height: 180px; border-radius: 50%; margin: 20px auto; display: block; border: 3px solid #d4af37; object-fit: cover;"
+                         onerror="this.style.display='none'; document.getElementById('mandala4Placeholder').style.display='flex'">
+                    
+                    <div id="mandala4Placeholder" class="mandala-placeholder" style="display: none;" onclick="safeClick('mandala4Input')">
+                        <input type="file" id="mandala4Input" class="upload-input" accept="image/*" onchange="uploadMandalaImage(this, 4)">
+                        <span>Click to Upload<br>Week 4 Mandala</span>
+                    </div>
+                    
+                    <label style="display: block; margin: 15px 0 10px; font-weight: 600; font-size: 12px;">Final Reflections:</label>
+                    <textarea class="textarea-input" style="min-height: 80px; font-size: 12px;" 
+                              placeholder="What clarity have I gained about where I belong?"
+                              oninput="saveData('week4_mandala_reflection', this.value)"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary Section -->
+        <div id="summary" class="section">
+            <h2>Journey Summary</h2>
+            <div class="tracking-card">
+                <h3>Final Reflection Questions</h3>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">After 30 days of reflection, where do you feel most at home?</label>
+                    <textarea class="textarea-input" placeholder="Share your heart..."></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Where do you feel most supported as a mother?</label>
+                    <textarea class="textarea-input" placeholder="Consider your experiences..."></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">What path do you feel called to take for your family?</label>
+                    <textarea class="textarea-input" placeholder="Listen to your heart..."></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">What are your hopes for the future?</label>
+                    <textarea class="textarea-input" placeholder="Dream big..."></textarea>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">How has this journey changed your perspective?</label>
+                    <textarea class="textarea-input" placeholder="Reflect on your growth..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <button class="save-btn" onclick="saveProgress()">📋 Create JSON Backup</button>
+        
+        <div style="text-align: center; margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #e8f4fd 0%, #fff5f5 100%); border-radius: 15px; border: 2px solid #d4af37;">
+            <h4 style="color: #c2185b; margin-bottom: 10px;">💾 Your Entries Are Automatically Saved!</h4>
+            <p style="color: #4a90e2; font-size: 14px; margin: 0;">
+                ✓ Everything you write is automatically saved in your browser<br>
+                ✓ Your progress will be there when you return to this same file<br>
+                ✓ Use "Create JSON Backup" for an additional backup file
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let currentDay = 1;
+        let journalData = {};
+        
+        // Daily quotes, affirmations, and scriptures
+        const dailyInspiration = [
+            { day: 1, text: "\"God is within her, she will not fall.\" - Psalm 46:5", type: "scripture" },
+            { day: 2, text: "I am growing with grace, one breath at a time.", type: "affirmation" },
+            { day: 3, text: "\"The Lord will fight for you; you need only to be still.\" - Exodus 14:14", type: "scripture" },
+            { day: 4, text: "I am becoming the woman I prayed to be.", type: "affirmation" },
+            { day: 5, text: "\"She is clothed with strength and dignity, and she laughs without fear of the future.\" - Proverbs 31:25", type: "scripture" },
+            { day: 6, text: "I embrace progress, not perfection.", type: "affirmation" },
+            { day: 7, text: "\"He makes all things beautiful in His time.\" - Ecclesiastes 3:11", type: "scripture" },
+            { day: 8, text: "I am held, even when I feel overwhelmed.", type: "affirmation" },
+            { day: 9, text: "\"Cast all your anxiety on Him because He cares for you.\" - 1 Peter 5:7", type: "scripture" },
+            { day: 10, text: "My feelings are valid and deserve attention.", type: "affirmation" },
+            { day: 11, text: "\"For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.\" - Jeremiah 29:11", type: "scripture" },
+            { day: 12, text: "I trust my inner wisdom to guide me.", type: "affirmation" },
+            { day: 13, text: "\"The Lord is close to the brokenhearted and saves those who are crushed in spirit.\" - Psalm 34:18", type: "scripture" },
+            { day: 14, text: "I can love others deeply while also loving myself.", type: "affirmation" },
+            { day: 15, text: "\"Come to me, all who are weary and burdened, and I will give you rest.\" - Matthew 11:28", type: "scripture" },
+            { day: 16, text: "My needs matter and deserve to be met.", type: "affirmation" },
+            { day: 17, text: "\"You are altogether beautiful, my love; there is no flaw in you.\" - Song of Songs 4:7", type: "scripture" },
+            { day: 18, text: "I am allowed to change and grow.", type: "affirmation" },
+            { day: 19, text: "\"In quietness and trust is your strength.\" - Isaiah 30:15", type: "scripture" },
+            { day: 20, text: "I choose peace over perfection.", type: "affirmation" },
+            { day: 21, text: "\"The joy of the Lord is your strength.\" - Nehemiah 8:10", type: "scripture" },
+            { day: 22, text: "I am exactly where I need to be in this moment.", type: "affirmation" },
+            { day: 23, text: "\"And we know that in all things God works for the good of those who love him.\" - Romans 8:28", type: "scripture" },
+            { day: 24, text: "My children are blessed to have me as their mother.", type: "affirmation" },
+            { day: 25, text: "\"She opens her mouth with wisdom, and the teaching of kindness is on her tongue.\" - Proverbs 31:26", type: "scripture" },
+            { day: 26, text: "I trust myself to make wise decisions.", type: "affirmation" },
+            { day: 27, text: "\"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.\" - Joshua 1:9", type: "scripture" },
+            { day: 28, text: "I have everything within me that I need to thrive.", type: "affirmation" },
+            { day: 29, text: "\"Many are the plans in the mind of a man, but it is the purpose of the Lord that will stand.\" - Proverbs 19:21", type: "scripture" },
+            { day: 30, text: "I am whole, I am wise, I am ready for whatever comes next.", type: "affirmation" }
+        ];
+        
+        // Weekly feedback messages from the journal
+        const weeklyFeedback = {
+            1: {
+                title: "Week 1: You're Building Awareness",
+                message: "Beautiful work this week! You're beginning to notice patterns and pay attention to your inner world. This awareness is the foundation of all growth and decision-making. Keep tracking your experiences - they're valuable data for your journey."
+            },
+            2: {
+                title: "Week 2: Patterns Are Emerging", 
+                message: "I'm seeing you develop deeper insights about your needs, triggers, and what brings you peace. This information is precious - it's showing you who you are and what you need to thrive. Trust these patterns you're noticing."
+            },
+            3: {
+                title: "Week 3: You're Growing Stronger",
+                message: "Your reflections show increasing self-awareness and emotional intelligence. You're learning to honor your feelings while also caring for your family. This balance is beautiful and shows your wisdom is growing."
+            },
+            4: {
+                title: "Week 4: Clarity Is Coming",
+                message: "Look how far you've come! Your ability to identify your needs, set boundaries, and make thoughtful choices has grown tremendously. You're ready to trust yourself with the big decisions ahead. You've got this, mama."
+            }
+        };
+        
+        // Initialize the journal
+        function initializeJournal() {
+            createDaySelector();
+            loadDailyContent(1);
+            loadSavedData();
+        }
+        
+        // Create day selector buttons
+        function createDaySelector() {
+            const selector = document.getElementById('daySelector');
+            for (let i = 1; i <= 30; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'day-btn';
+                if (i === 1) btn.classList.add('active');
+                btn.textContent = i;
+                btn.onclick = () => selectDay(i);
+                selector.appendChild(btn);
+            }
+        }
+        
+        // Select a specific day
+        function selectDay(day) {
+            currentDay = day;
+            document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.day-btn')[day - 1].classList.add('active');
+            document.getElementById('currentDayNum').textContent = day;
+            loadDailyContent(day);
+            restoreFormData();
+        }
+        
+        // Load daily content
+        function loadDailyContent(day) {
+            const inspiration = dailyInspiration[day - 1];
+            const content = document.getElementById('dailyContent');
+            
+            let weeklyFeedbackHtml = '';
+            if (day % 7 === 0) {
+                const week = day / 7;
+                const feedback = weeklyFeedback[week];
+                weeklyFeedbackHtml = `
+                    <div class="weekly-feedback">
+                        <div class="feedback-title">${feedback.title}</div>
+                        <div class="feedback-message">${feedback.message}</div>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = `
+                ${weeklyFeedbackHtml}
+                
+                <div class="daily-content">
+                    <!-- Daily Inspiration -->
+                    <div class="tracking-card inspiration-card">
+                        <h3>Today's Inspiration</h3>
+                        <div class="quote-text">${inspiration.text}</div>
+                        <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">
+                            ${inspiration.type === 'scripture' ? '🙏 Scripture' : '💫 Affirmation'}
+                        </p>
+                    </div>
+                    
+                    <!-- Mood & Energy -->
+                    <div class="tracking-card">
+                        <h3>Mood & Energy Check-in</h3>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">How are you feeling today?</label>
+                        <div class="mood-wheel">
+                            <div class="mood-option" onclick="selectMood(this, 'joyful')">😊 Joyful</div>
+                            <div class="mood-option" onclick="selectMood(this, 'peaceful')">😌 Peaceful</div>
+                            <div class="mood-option" onclick="selectMood(this, 'anxious')">😰 Anxious</div>
+                            <div class="mood-option" onclick="selectMood(this, 'sad')">😢 Sad</div>
+                            <div class="mood-option" onclick="selectMood(this, 'angry')">😠 Frustrated</div>
+                            <div class="mood-option" onclick="selectMood(this, 'overwhelmed')">🤯 Overwhelmed</div>
+                            <div class="mood-option" onclick="selectMood(this, 'hopeful')">🌅 Hopeful</div>
+                            <div class="mood-option" onclick="selectMood(this, 'grateful')">🙏 Grateful</div>
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">Energy Level (1-10):</label>
+                        <input type="range" min="1" max="10" value="5" class="energy-slider" 
+                               oninput="updateEnergyDisplay(this.value); saveData('energy_${day}', this.value)">
+                        <div style="text-align: center; margin-top: 5px;">
+                            <span id="energyDisplay">5</span>/10
+                        </div>
+                    </div>
+                    
+                    <!-- Location Tracking -->
+                    <div class="tracking-card">
+                        <h3>Where are you today?</h3>
+                        <div class="location-toggle">
+                            <button class="location-btn" onclick="selectLocation(this, 'husband_home')">Husband's Home</button>
+                            <button class="location-btn" onclick="selectLocation(this, 'parents_home')">Parents' Home</button>
+                        </div>
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">How does this location feel today?</label>
+                        <textarea class="textarea-input" placeholder="Describe your feelings about being here today..."
+                                  oninput="saveData('location_feelings_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Child Tracking - A (2.5 years old) -->
+                    <div class="tracking-card">
+                        <h4>A (2.5 years old) - Daily Tracking</h4>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">A's Behavior Today:</label>
+                        <div class="behavior-checkboxes">
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Fussy
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Meltdown
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Illness
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Calm
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Energetic
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Playful
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('A', ${day}, this)"> Joyful
+                            </label>
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">My Engagement with A (1-10):</label>
+                        <div class="engagement-scale">
+                            ${[1,2,3,4,5,6,7,8,9,10].map(num => 
+                                `<div class="scale-number" onclick="selectEngagement(this, 'A', ${day}, ${num})">${num}</div>`
+                            ).join('')}
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">Special moments with A today:</label>
+                        <textarea class="textarea-input" placeholder="What made you smile or feel connected with A?"
+                                  oninput="saveData('A_moments_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Child Tracking - Z (8 months old) -->
+                    <div class="tracking-card">
+                        <h4>Z (8 months old) - Daily Tracking</h4>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">Z's Behavior Today:</label>
+                        <div class="behavior-checkboxes">
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Fussy
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Meltdown
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Illness
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Calm
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Energetic
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Playful
+                            </label>
+                            <label class="behavior-option">
+                                <input type="checkbox" onchange="saveChildBehavior('Z', ${day}, this)"> Joyful
+                            </label>
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">My Engagement with Z (1-10):</label>
+                        <div class="engagement-scale">
+                            ${[1,2,3,4,5,6,7,8,9,10].map(num => 
+                                `<div class="scale-number" onclick="selectEngagement(this, 'Z', ${day}, ${num})">${num}</div>`
+                            ).join('')}
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">Special moments with Z today:</label>
+                        <textarea class="textarea-input" placeholder="What made you smile or feel connected with Z?"
+                                  oninput="saveData('Z_moments_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Self-Esteem & Support -->
+                    <div class="tracking-card">
+                        <h3>Self-Worth Check-in</h3>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">Something I love about myself today:</label>
+                        <textarea class="textarea-input" placeholder="Celebrate yourself..."
+                                  oninput="saveData('self_love_${day}', this.value)"></textarea>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">How supported do I feel today? (1-10):</label>
+                        <div class="engagement-scale">
+                            ${[1,2,3,4,5,6,7,8,9,10].map(num => 
+                                `<div class="scale-number" onclick="selectEngagement(this, 'support', ${day}, ${num})">${num}</div>`
+                            ).join('')}
+                        </div>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">Who or what supported me today?</label>
+                        <textarea class="textarea-input" placeholder="Name your support systems..."
+                                  oninput="saveData('support_source_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Triggers & Coping -->
+                    <div class="tracking-card">
+                        <h3>Emotional Processing</h3>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">What triggered difficult emotions today?</label>
+                        <textarea class="textarea-input" placeholder="It's safe to name what was hard..."
+                                  oninput="saveData('triggers_${day}', this.value)"></textarea>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">How did I cope or what do I need?</label>
+                        <textarea class="textarea-input" placeholder="What helped or what would help..."
+                                  oninput="saveData('coping_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Gratitude & Joy -->
+                    <div class="tracking-card">
+                        <h3>Light & Gratitude</h3>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">Three things I'm grateful for today:</label>
+                        <textarea class="textarea-input" placeholder="1. 
+2. 
+3. "
+                                  oninput="saveData('gratitude_${day}', this.value)"></textarea>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">A moment of joy or peace I experienced:</label>
+                        <textarea class="textarea-input" placeholder="Even small moments count..."
+                                  oninput="saveData('joy_moment_${day}', this.value)"></textarea>
+                    </div>
+                    
+                    <!-- Deep Reflection -->
+                    <div class="tracking-card">
+                        <h3>Today's Deep Reflection</h3>
+                        <label style="display: block; margin-bottom: 10px; font-weight: 600;">Where do I feel most "myself" today?</label>
+                        <textarea class="textarea-input" placeholder="In what moments or places did you feel most authentic?"
+                                  oninput="saveData('authentic_self_${day}', this.value)"></textarea>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">What do I hope for tomorrow?</label>
+                        <textarea class="textarea-input" placeholder="Set an intention for tomorrow..."
+                                  oninput="saveData('tomorrow_hope_${day}', this.value)"></textarea>
+                        
+                        <label style="display: block; margin: 15px 0 10px; font-weight: 600;">How close do I feel to knowing "where I belong"? (1-10)</label>
+                        <div class="engagement-scale">
+                            ${[1,2,3,4,5,6,7,8,9,10].map(num => 
+                                `<div class="scale-number" onclick="selectEngagement(this, 'clarity', ${day}, ${num})">${num}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    ${addSpecialPrompts(day)}
+                </div>
+            `;
+        }
+        
+        // Show different sections
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(sectionName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Select mood
+        function selectMood(element, mood) {
+            document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            saveData(`mood_${currentDay}`, mood);
+        }
+        
+        // Update energy display
+        function updateEnergyDisplay(value) {
+            document.getElementById('energyDisplay').textContent = value;
+        }
+        
+        // Select location
+        function selectLocation(element, location) {
+            document.querySelectorAll('.location-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            saveData(`location_${currentDay}`, location);
+        }
+        
+        // Save child behavior
+        function saveChildBehavior(child, day, checkbox) {
+            const behavior = checkbox.parentElement.textContent.trim();
+            const key = `${child}_behavior_${day}_${behavior}`;
+            saveData(key, checkbox.checked);
+        }
+        
+        // Select engagement level
+        function selectEngagement(element, type, day, level) {
+            // Remove selection from siblings
+            element.parentElement.querySelectorAll('.scale-number').forEach(num => {
+                num.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            saveData(`${type}_engagement_${day}`, level);
+        }
+        
+        // Save data to localStorage for automatic persistence
+        function saveData(key, value) {
+            if (!journalData[currentDay]) {
+                journalData[currentDay] = {};
+            }
+            journalData[currentDay][key] = value;
+            
+            // Automatically save to localStorage for persistence
+            try {
+                localStorage.setItem('journalData', JSON.stringify(journalData));
+                console.log('Data auto-saved:', key, value);
+                
+                // Show auto-save indicator
+                showAutoSaveIndicator();
+            } catch (error) {
+                console.log('LocalStorage not available, using memory only');
+            }
+        }
+        
+        // Show auto-save indicator briefly
+        function showAutoSaveIndicator() {
+            const indicator = document.getElementById('autoSaveIndicator');
+            if (indicator) {
+                indicator.classList.add('show');
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                }, 2000);
+            }
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            try {
+                const savedData = localStorage.getItem('journalData');
+                if (savedData) {
+                    journalData = JSON.parse(savedData);
+                    console.log('Journal data loaded from localStorage');
+                }
+            } catch (error) {
+                console.log('Could not load from localStorage, starting fresh');
+                journalData = {};
+            }
+        }
+        
+        // Restore form data for current day
+        function restoreFormData() {
+            if (!journalData[currentDay]) return;
+            
+            const dayData = journalData[currentDay];
+            
+            // Restore all input fields
+            Object.keys(dayData).forEach(key => {
+                const elements = document.querySelectorAll(`[oninput*="${key}"]`);
+                elements.forEach(element => {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+                        element.value = dayData[key];
+                    }
+                });
+            });
+        }
+        
+        // Save complete journey as final backup
+        function saveProgress() {
+            try {
+                // Create a simple JSON backup instead of embedding in HTML
+                const backupData = {
+                    journalEntries: journalData,
+                    saveDate: new Date().toISOString(),
+                    totalDays: Object.keys(journalData).length
+                };
+                
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'My_Journey_Backup_' + new Date().toISOString().split('T')[0] + '.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                alert('📋 Journey Backup Created!\n\n✅ Your entries are automatically saved in your browser\n💾 This JSON file is an additional backup\n🔄 Continue using this same journal file for all 30 days');
+                
+            } catch (error) {
+                console.error('Error creating backup:', error);
+                alert('There was an error creating your backup. Please try again.');
+            }
+        }
+        
+        // Special reflection prompts for specific days
+        const specialPrompts = {
+            5: "How do I feel about being a mother in this environment versus the other?",
+            10: "What kind of support do I need that I'm not getting?",
+            15: "How has my relationship with my husband changed since becoming a mother?",
+            20: "What does 'home' really mean to me?",
+            25: "Where do I see myself and my children thriving?",
+            30: "If I trust my heart completely, what is it telling me?"
+        };
+        
+        // Letter prompts for deeper reflection
+        const letterPrompts = {
+            12: "Write a letter to yourself at age 10. What would you tell that little girl about the woman you've become?",
+            18: "Write a letter to A. What do you want them to know about this time in your lives?",
+            24: "Write a letter to Z. What hopes and dreams do you have for their future?",
+            30: "Write a letter to your future self at 30. What hopes do you have for that version of yourself?"
+        };
+        
+        // Add special prompts to daily content
+        function addSpecialPrompts(day) {
+            let content = '';
+            
+            // Add weekly mandala links on specific days
+            if (day === 7 || day === 14 || day === 21 || day === 30) {
+                const weekNum = day === 30 ? 4 : Math.ceil(day / 7);
+                const weekText = day === 7 ? 'your first week' : day === 14 ? 'two weeks' : day === 21 ? 'three weeks' : 'your full journey';
+                
+                content += '<div class="tracking-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #f0f8ff 0%, #fff5f5 100%); text-align: center;">';
+                content += '<h3>🎨 Time for Weekly Mandala Reflection!</h3>';
+                content += '<p style="margin: 15px 0; font-style: italic; color: #4a90e2;">';
+                content += 'You\'ve completed ' + weekText + '! Take some mindful time to color and reflect on your growth.';
+                content += '</p>';
+                content += '<button class="week-mandala-link" onclick="showSection(\'coloring\'); scrollToWeek(' + weekNum + ')">';
+                content += '🎨 Access Week ' + weekNum + ' Mandala';
+                content += '</button>';
+                content += '<p style="font-size: 12px; color: #666; margin-top: 10px;">Upload your mandala and reflect on this week\'s journey</p>';
+                content += '</div>';
+            }
+            
+            if (specialPrompts[day]) {
+                content += '<div class="tracking-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);">';
+                content += '<h3>Today\'s Special Reflection</h3>';
+                content += '<p style="margin-bottom: 15px; font-style: italic; color: #4a90e2;">' + specialPrompts[day] + '</p>';
+                content += '<textarea class="textarea-input" style="min-height: 150px;" placeholder="My honest thoughts..." oninput="saveData(\'special_prompt_' + day + '\', this.value)"></textarea>';
+                content += '</div>';
+            }
+            
+            if (letterPrompts[day]) {
+                content += '<div class="tracking-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, #f0f8ff 0%, #fff5f5 100%);">';
+                content += '<h3>Letter Writing</h3>';
+                content += '<p style="margin-bottom: 15px; font-style: italic; color: #c2185b;">' + letterPrompts[day] + '</p>';
+                content += '<textarea class="textarea-input" style="min-height: 200px;" placeholder="Dear..." oninput="saveData(\'letter_' + day + '\', this.value)"></textarea>';
+                content += '</div>';
+            }
+            
+            // Add weekly summary on days 7, 14, 21, 28
+            if (day % 7 === 0) {
+                const week = day / 7;
+                content += '<div class="tracking-card" style="grid-column: 1 / -1;">';
+                content += '<h3>Week ' + week + ' Summary</h3>';
+                content += '<label style="display: block; margin-bottom: 10px; font-weight: 600;">Overall patterns I noticed this week:</label>';
+                content += '<textarea class="textarea-input" placeholder="Patterns in mood, energy, relationships..." oninput="saveData(\'week_' + week + '_patterns\', this.value)"></textarea>';
+                content += '<label style="display: block; margin-bottom: 10px; font-weight: 600;">How I felt about my location this week:</label>';
+                content += '<textarea class="textarea-input" placeholder="My feelings about where I was..." oninput="saveData(\'week_' + week + '_location_feelings\', this.value)"></textarea>';
+                content += '</div>';
+            }
+            
+            return content;
+        }
+        
+        // Image upload functions
+        function uploadHeaderImage(input) {
+            try {
+                const file = input?.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const placeholder = input.parentElement;
+                        if (placeholder) {
+                            placeholder.innerHTML = `<img src="${e.target.result}" class="uploaded-image" alt="Header Image">`;
+                            placeholder.style.border = '3px solid #d4af37';
+                            console.log('Header image uploaded successfully');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } catch (error) {
+                console.error('Error uploading header image:', error);
+            }
+        }
+        
+        function uploadIntroLetter(input) {
+            try {
+                const file = input?.files[0];
+                if (file) {
+                    const placeholder = input.parentElement;
+                    const fileName = file.name;
+                    
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (placeholder) {
+                                placeholder.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" alt="Welcome Letter">`;
+                                placeholder.style.border = '3px solid #d4af37';
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // For documents, show file name
+                        if (placeholder) {
+                            placeholder.innerHTML = `<div style="text-align: center; color: #4a90e2;"><strong>📄 ${fileName}</strong><br><small>Document uploaded successfully</small></div>`;
+                            placeholder.style.border = '3px solid #d4af37';
+                        }
+                    }
+                    console.log('Intro letter uploaded successfully');
+                }
+            } catch (error) {
+                console.error('Error uploading intro letter:', error);
+            }
+        }
+        
+        function uploadMandalaImage(input, number) {
+            try {
+                const file = input?.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const placeholder = input.parentElement;
+                        if (placeholder) {
+                            placeholder.innerHTML = `<img src="${e.target.result}" class="uploaded-image" alt="Week ${number} Mandala" style="border-radius: 50%;">`;
+                            placeholder.style.border = '3px solid #d4af37';
+                            console.log(`Week ${number} mandala uploaded successfully`);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } catch (error) {
+                console.error(`Error uploading mandala ${number}:`, error);
+            }
+        }
+        
+        // Safe click function to prevent null reference errors
+        function safeClick(elementId) {
+            try {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.click();
+                } else {
+                    console.warn(`Element ${elementId} not found`);
+                }
+            } catch (error) {
+                console.error('Error in safeClick:', error);
+            }
+        }
+        
+        function scrollToWeek(weekNum) {
+            // Small delay to ensure section is shown first
+            setTimeout(() => {
+                const weekCards = document.querySelectorAll('.weekly-mandala-card');
+                if (weekCards && weekCards[weekNum - 1]) {
+                    weekCards[weekNum - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
+        }
+        
+        // Initialize journal when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add small delay to ensure all elements are loaded
+            setTimeout(function() {
+                initializeJournal();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
